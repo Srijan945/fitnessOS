@@ -11,9 +11,11 @@ import { Label } from '@/components/ui/label';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from '@/components/ui/dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Plus, Search, Trash2, Loader2, ChevronLeft, ChevronRight, UtensilsCrossed } from 'lucide-react';
 import { format, addDays, subDays } from 'date-fns';
 import { toast } from 'sonner';
+import { CreateItemDialog, type CreateItemType } from './create-item-dialog';
 import type { Food, FoodEntry, MealType } from '@/lib/supabase/types';
 
 const MEAL_TYPES: MealType[] = ['breakfast', 'lunch', 'dinner', 'snack'];
@@ -30,6 +32,7 @@ export default function NutritionPage() {
   const [quantity, setQuantity] = useState('100');
   const [unit, setUnit] = useState('g');
   const [mealType, setMealType] = useState<MealType>('breakfast');
+  const [createType, setCreateType] = useState<CreateItemType>(null);
 
   const { data: target } = useQuery({
     queryKey: ['daily-target', selectedDate],
@@ -249,6 +252,17 @@ export default function NutritionPage() {
           <Button variant="outline" size="icon" onClick={() => setSelectedDate(format(addDays(new Date(selectedDate), 1), 'yyyy-MM-dd'))}>
             <ChevronRight className="h-4 w-4" />
           </Button>
+
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button className="ml-2 gap-2" variant="default"><Plus className="h-4 w-4" /> <span className="hidden sm:inline">Create</span></Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem onClick={() => setCreateType('food')}>Custom Food</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setCreateType('meal')}>Meal Template</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setCreateType('recipe')}>Recipe</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </div>
 
@@ -525,6 +539,8 @@ export default function NutritionPage() {
           );
         })}
       </div>
+      
+      <CreateItemDialog type={createType} onClose={() => setCreateType(null)} />
     </div>
   );
 }

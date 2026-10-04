@@ -85,7 +85,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   );
 
   return (
-    <div className="flex h-screen overflow-hidden bg-transparent">
+    <div className="flex h-screen overflow-hidden bg-transparent animate-in fade-in zoom-in-[0.98] duration-1000 ease-out fill-mode-both">
       {/* Desktop sidebar */}
       <div className="hidden md:flex">{Sidebar}</div>
 
