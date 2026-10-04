@@ -11,7 +11,11 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
-import { Activity, Target, Dumbbell, Utensils, Check, Loader2, ChevronRight, ChevronLeft } from 'lucide-react';
+import { Activity, Target, Dumbbell, Utensils, Check, Loader2, ChevronRight, ChevronLeft, Calendar as CalendarIcon } from 'lucide-react';
+import { format } from 'date-fns';
+import { cn } from '@/lib/utils';
+import { Calendar } from '@/components/ui/calendar';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { toast } from 'sonner';
 
 const ACTIVITY_OPTIONS: { value: ActivityLevel; label: string; description: string }[] = [
@@ -171,8 +175,9 @@ export default function OnboardingPage() {
       await refreshProfile();
       toast.success('Profile set up! Welcome to FitOS.');
       router.push('/today');
-    } catch (error) {
-      toast.error(error instanceof Error ? error.message : 'Failed to save profile');
+    } catch (error: any) {
+      console.error('Onboarding save error:', error);
+      toast.error(error?.message || JSON.stringify(error) || 'Failed to save profile');
     } finally {
       setSaving(false);
     }
@@ -187,8 +192,8 @@ export default function OnboardingPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-primary/5">
-      <div className="mx-auto max-w-2xl px-4 py-8">
+    <div className="min-h-screen pt-8 pb-16">
+      <div className="mx-auto max-w-2xl px-4">
         {/* Header */}
         <div className="mb-8 flex items-center gap-3">
           <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 border border-primary/20">
@@ -211,16 +216,50 @@ export default function OnboardingPage() {
 
         {/* Step 0: Basic Profile */}
         {step === 0 && (
-          <Card className="border-border/50 animate-fade-in">
+          <Card className="border-border/20 glass shadow-2xl animate-fade-in">
             <CardContent className="pt-6 space-y-5">
               <div className="flex items-center gap-2 mb-2">
                 <Target className="h-5 w-5 text-primary" />
                 <h2 className="text-lg font-semibold">Basic Profile</h2>
               </div>
               <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2 col-span-2">
-                  <Label htmlFor="dob">Date of Birth</Label>
-                  <Input id="dob" type="date" value={dateOfBirth} onChange={(e) => setDateOfBirth(e.target.value)} required />
+                <div className="space-y-2 col-span-2 flex flex-col">
+                  <Label>Date of Birth</Label>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant={"outline"}
+                        className={cn(
+                          "w-full justify-start text-left font-normal",
+                          !dateOfBirth && "text-muted-foreground"
+                        )}
+                      >
+                        <CalendarIcon className="mr-2 h-4 w-4" />
+                        {dateOfBirth ? format(new Date(dateOfBirth), "PPP") : <span>Pick a date</span>}
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0" align="start">
+                      <Calendar
+                        mode="single"
+                        selected={dateOfBirth ? new Date(dateOfBirth) : undefined}
+                        onSelect={(date) => {
+                          if (date) {
+                            const y = date.getFullYear();
+                            const m = String(date.getMonth() + 1).padStart(2, '0');
+                            const d = String(date.getDate()).padStart(2, '0');
+                            setDateOfBirth(`${y}-${m}-${d}`);
+                          }
+                        }}
+                        disabled={(date) =>
+                          date > new Date() || date < new Date("1900-01-01")
+                        }
+                        initialFocus
+                        captionLayout="dropdown"
+                        fromYear={1900}
+                        toYear={new Date().getFullYear()}
+                      />
+                    </PopoverContent>
+                  </Popover>
                 </div>
                 <div className="space-y-2">
                   <Label>Sex</Label>
@@ -258,7 +297,7 @@ export default function OnboardingPage() {
 
         {/* Step 1: Activity Level */}
         {step === 1 && (
-          <Card className="border-border/50 animate-fade-in">
+          <Card className="border-border/20 glass shadow-2xl animate-fade-in">
             <CardContent className="pt-6 space-y-4">
               <div className="flex items-center gap-2 mb-2">
                 <Activity className="h-5 w-5 text-primary" />
@@ -292,7 +331,7 @@ export default function OnboardingPage() {
 
         {/* Step 2: Goal */}
         {step === 2 && (
-          <Card className="border-border/50 animate-fade-in">
+          <Card className="border-border/20 glass shadow-2xl animate-fade-in">
             <CardContent className="pt-6 space-y-4">
               <div className="flex items-center gap-2 mb-2">
                 <Target className="h-5 w-5 text-primary" />
@@ -321,7 +360,7 @@ export default function OnboardingPage() {
 
         {/* Step 3: Training & Nutrition */}
         {step === 3 && (
-          <Card className="border-border/50 animate-fade-in">
+          <Card className="border-border/20 glass shadow-2xl animate-fade-in">
             <CardContent className="pt-6 space-y-5">
               <div className="flex items-center gap-2 mb-2">
                 <Dumbbell className="h-5 w-5 text-primary" />
@@ -384,7 +423,7 @@ export default function OnboardingPage() {
 
         {/* Step 4: Target Review */}
         {step === 4 && targets && (
-          <Card className="border-border/50 animate-fade-in">
+          <Card className="border-border/20 glass shadow-2xl animate-fade-in">
             <CardContent className="pt-6 space-y-6">
               <div className="flex items-center gap-2 mb-2">
                 <Utensils className="h-5 w-5 text-primary" />

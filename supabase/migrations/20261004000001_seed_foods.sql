@@ -1,0 +1,16 @@
+INSERT INTO foods (name, brand, category, serving_size, serving_unit, calories_per_serving, protein_g, carbs_g, fat_g, fiber_g, sugar_g, sodium_mg) VALUES
+('Chicken Breast (Cooked)', 'Generic', 'Meat', 100, 'g', 165, 31, 0, 3.6, 0, 0, 74),
+('White Rice (Cooked)', 'Generic', 'Grains', 100, 'g', 130, 2.7, 28, 0.3, 0.4, 0.1, 1),
+('Broccoli (Boiled)', 'Generic', 'Vegetables', 100, 'g', 35, 2.4, 7.2, 0.4, 3.3, 1.4, 41),
+('Eggs (Large)', 'Generic', 'Dairy & Eggs', 50, 'g', 72, 6.3, 0.4, 4.8, 0, 0.2, 71),
+('Oats (Dry)', 'Generic', 'Grains', 100, 'g', 389, 16.9, 66.3, 6.9, 10.6, 0.8, 2),
+('Almonds', 'Generic', 'Nuts', 100, 'g', 579, 21.2, 21.6, 49.9, 12.5, 4.4, 1),
+('Whey Protein Isolate', 'Generic', 'Supplements', 30, 'g', 110, 24, 2, 0.5, 0, 1, 100),
+('Banana', 'Generic', 'Fruits', 100, 'g', 89, 1.1, 22.8, 0.3, 2.6, 12.2, 1),
+('Sweet Potato (Baked)', 'Generic', 'Vegetables', 100, 'g', 90, 2, 20.7, 0.15, 3.3, 6.5, 36),
+('Olive Oil', 'Generic', 'Oils', 15, 'ml', 119, 0, 0, 13.5, 0, 0, 0),
+('Greek Yogurt (Non-fat)', 'Generic', 'Dairy & Eggs', 100, 'g', 59, 10, 3.6, 0.4, 0, 3.2, 36),
+('Avocado', 'Generic', 'Fruits', 100, 'g', 160, 2, 8.5, 14.7, 6.7, 0.7, 7),
+('Salmon (Cooked)', 'Generic', 'Seafood', 100, 'g', 206, 22.1, 0, 12.3, 0, 0, 61),
+('Ground Beef (80% Lean)', 'Generic', 'Meat', 100, 'g', 254, 17.2, 0, 20, 0, 0, 81),
+('Peanut Butter', 'Generic', 'Nuts', 32, 'g', 188, 8, 6.3, 16, 1.9, 3.1, 152);

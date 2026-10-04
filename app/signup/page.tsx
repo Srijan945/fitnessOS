@@ -51,19 +51,19 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-background via-background to-primary/5">
+    <div className="min-h-screen flex items-center justify-center p-4">
       <div className="w-full max-w-md space-y-6">
         <div className="flex flex-col items-center gap-3 text-center">
-          <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 border border-primary/20">
+          <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 border border-primary/20 backdrop-blur-md">
             <Activity className="h-7 w-7 text-primary" />
           </div>
           <div>
-            <h1 className="text-2xl font-bold tracking-tight">FitOS</h1>
-            <p className="text-sm text-muted-foreground">Your personal fitness operating system</p>
+            <h1 className="text-2xl font-bold tracking-tight text-white drop-shadow-md">FitOS</h1>
+            <p className="text-sm text-gray-300">Your personal fitness operating system</p>
           </div>
         </div>
 
-        <Card className="border-border/50">
+        <Card className="border-border/20 glass shadow-2xl">
           <CardHeader>
             <CardTitle className="text-xl">Create your account</CardTitle>
             <CardDescription>Start tracking your fitness journey today</CardDescription>
